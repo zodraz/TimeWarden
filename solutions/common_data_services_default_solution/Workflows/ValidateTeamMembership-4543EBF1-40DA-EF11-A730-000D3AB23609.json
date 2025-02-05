@@ -1,0 +1,730 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec": {
+        "api": {
+          "name": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec",
+          "logicalName": "new_jira-20api"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedjira20api5f69fe2589636e6ebc5f63eedd85936a24ec_e6eb7"
+        },
+        "runtimeSource": "embedded"
+      },
+      "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc": {
+        "api": {
+          "name": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc",
+          "logicalName": "crafa_5Fbamboohr-20api"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcrafa5fbamboohr20api5f69fe2589636e6ebc_4571b"
+        },
+        "runtimeSource": "invoker"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Company Domain for BambooHR (crafa_bamboohr_companyDomain)": {
+          "defaultValue": "bamboohrcopilot2",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_bamboohr_companyDomain",
+            "description": "Company domain for BambooHR connection"
+          }
+        },
+        "Jira OrganizationId (crc28_jraOrganizationId)": {
+          "defaultValue": "0aj3c9jb-bc0b-161d-67k0-bk734d89148b",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crc28_jraOrganizationId",
+            "description": "Jira OrganizationId"
+          }
+        },
+        "Jira Team Id (crc28_jiraTeamId)": {
+          "defaultValue": "c0ab55b7-a3d6-43a8-afe2-7dd71668a022",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crc28_jiraTeamId",
+            "description": "Jira Team Id"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Enter an email address.",
+                  "format": "email",
+                  "title": "Email",
+                  "type": "string",
+                  "x-ms-content-hint": "EMAIL",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Check_if_isTeamMember": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isteammember": {
+                  "title": "IsTeamMember",
+                  "description": "Message indiciating if the email entered is a valid team member",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "employeeid": {
+                  "title": "EmployeeId",
+                  "description": "Employee Id for the email validated",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "isteammember": "@{variables('result')}",
+              "employeeid": "@{variables('employeeId')}"
+            }
+          }
+        },
+        "Parse_employees_as_JSON": {
+          "runAfter": {
+            "Get_Employees": [
+              "Succeeded"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_Employees')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "employees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "displayName": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "firstName": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "lastName": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "preferredName": {},
+                      "jobTitle": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "workPhone": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "mobilePhone": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "workEmail": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "department": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "location": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "division": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "facebook": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "linkedIn": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "twitterFeed": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "pinterest": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "instagram": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "pronouns": {},
+                      "workPhoneExtension": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "supervisor": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "photoUploaded": {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "photoUrl": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "canUploadPhoto": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "For_each_employee": {
+          "foreach": "@body('Select_employee')",
+          "actions": {
+            "Check_if_the_employee_email_is_the_one_sent_from_Copilot": {
+              "actions": {
+                "For_each_displayNames": {
+                  "foreach": "@variables('displayNames')",
+                  "actions": {
+                    "Condition": {
+                      "actions": {
+                        "Set_isTeamMember_to_true": {
+                          "type": "SetVariable",
+                          "inputs": {
+                            "name": "isTeamMember",
+                            "value": true
+                          }
+                        },
+                        "Set_employeeId": {
+                          "runAfter": {
+                            "Set_isTeamMember_to_true": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "SetVariable",
+                          "inputs": {
+                            "name": "employeeId",
+                            "value": "@items('For_each_employee')?['Id']"
+                          }
+                        }
+                      },
+                      "else": {
+                        "actions": {}
+                      },
+                      "expression": {
+                        "and": [
+                          {
+                            "equals": [
+                              "@items('For_each_displayNames')",
+                              "@items('For_each_employee')?['DisplayName']"
+                            ]
+                          }
+                        ]
+                      },
+                      "type": "If"
+                    }
+                  },
+                  "type": "Foreach"
+                }
+              },
+              "runAfter": {
+                "Print_employee_email": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@items('For_each_employee')?['Email']",
+                      "@triggerBody()?['email']"
+                    ]
+                  }
+                ]
+              },
+              "type": "If"
+            },
+            "Print_employee_email": {
+              "type": "Compose",
+              "inputs": "@items('For_each_employee')?['Email']"
+            }
+          },
+          "runAfter": {
+            "For_each_member_account_id": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        },
+        "Parse_team_member_accounts": {
+          "runAfter": {
+            "Get_team_members": [
+              "Succeeded"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_team_members')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "endCursor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "accountId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Initialize_displayNames_variable": {
+          "runAfter": {
+            "For_each_team_member_account": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "displayNames",
+                "type": "array",
+                "value": []
+              }
+            ]
+          }
+        },
+        "Initialize_isTeamMember": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "isTeamMember",
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          }
+        },
+        "Initialize_result_variable": {
+          "runAfter": {
+            "For_each_employee": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "result",
+                "type": "string",
+                "value": "@{triggerBody()?['email']} is not a team member"
+              }
+            ]
+          }
+        },
+        "Check_if_isTeamMember": {
+          "actions": {
+            "Set_valid_team_member_message": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "result",
+                "value": "@{triggerBody()?['email']} is a valid team member"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_result_variable": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@variables('isTeamMember')",
+                  "@true"
+                ]
+              }
+            ]
+          },
+          "type": "If"
+        },
+        "For_each_member_account_id": {
+          "foreach": "@variables('accountIds')",
+          "actions": {
+            "Parse_member_JSON": {
+              "runAfter": {
+                "Bulk_get_users": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ParseJson",
+              "inputs": {
+                "content": "@body('Bulk_get_users')",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string"
+                    },
+                    "maxResults": {
+                      "type": "integer"
+                    },
+                    "startAt": {
+                      "type": "integer"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "isLast": {
+                      "type": "boolean"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "self": {
+                            "type": "string"
+                          },
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "accountType": {
+                            "type": "string"
+                          },
+                          "avatarUrls": {
+                            "type": "object",
+                            "properties": {
+                              "48x48": {
+                                "type": "string"
+                              },
+                              "24x24": {
+                                "type": "string"
+                              },
+                              "16x16": {
+                                "type": "string"
+                              },
+                              "32x32": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "active": {
+                            "type": "boolean"
+                          },
+                          "timeZone": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "self",
+                          "accountId",
+                          "accountType",
+                          "avatarUrls",
+                          "displayName",
+                          "active",
+                          "timeZone"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "Append_to_displayNames_variable": {
+              "runAfter": {
+                "Parse_member_JSON": [
+                  "Succeeded"
+                ]
+              },
+              "type": "AppendToArrayVariable",
+              "inputs": {
+                "name": "displayNames",
+                "value": "@first(body('Parse_member_JSON')?['values'])?['displayName']"
+              }
+            },
+            "Bulk_get_users": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "accountId": "@items('For_each_member_account_id')",
+                  "Accept": "application/json"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec",
+                  "operationId": "BulkGetUsers",
+                  "connectionName": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_displayNames_variable": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        },
+        "For_each_team_member_account": {
+          "foreach": "@body('Parse_team_member_accounts')?['results']",
+          "actions": {
+            "Append_to_accountIds": {
+              "type": "AppendToArrayVariable",
+              "inputs": {
+                "name": "accountIds",
+                "value": "@items('For_each_team_member_account')?['accountId']"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_accountIds_variable": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        },
+        "Initialize_accountIds_variable": {
+          "runAfter": {
+            "Parse_team_member_accounts": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "accountIds",
+                "type": "array",
+                "value": []
+              }
+            ]
+          }
+        },
+        "Initialize_employeeId": {
+          "runAfter": {
+            "Initialize_isTeamMember": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "employeeId",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Select_employee": {
+          "runAfter": {
+            "Parse_employees_as_JSON": [
+              "Succeeded"
+            ]
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@body('Parse_employees_as_JSON')?['employees']",
+            "select": {
+              "DisplayName": "@item()?['displayName']",
+              "Email": "@item()?['workEmail']",
+              "Id": "@item()?['id']"
+            }
+          }
+        },
+        "Get_team_members": {
+          "runAfter": {
+            "Select_employee": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "orgId": "@parameters('Jira OrganizationId (crc28_jraOrganizationId)')",
+              "teamId": "@parameters('Jira Team Id (crc28_jiraTeamId)')",
+              "Accept": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "GetTeamMembers",
+              "connectionName": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec"
+            }
+          }
+        },
+        "Get_Employees": {
+          "runAfter": {
+            "Initialize_employeeId": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "companyDomain": "@parameters('Company Domain for BambooHR (crafa_bamboohr_companyDomain)')",
+              "Accept": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "GetEmployees",
+              "connectionName": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc"
+            }
+          }
+        }
+      },
+      "outputs": {},
+      "description": "The flow begins by requesting an email address. It retrieves employee data from an external API and parses the information. Team member details are fetched from another service, and the flow checks if the provided email matches any team member's email. If a match is found, it confirms the email belongs to a valid team member; otherwise, it indicates the email is not associated with a team member. Finally, the flow responds with a message indicating the team membership status of the provided email address."
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

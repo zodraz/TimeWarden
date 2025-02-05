@@ -1,0 +1,1135 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedjira20api5f69fe2589636e6ebc5f63eedd85936a24ec_e6eb7"
+        },
+        "api": {
+          "name": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec",
+          "logicalName": "new_jira-20api"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "undefined",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "JIRA Board Id (crafa_jiraBoardId)": {
+          "defaultValue": "1",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_jiraBoardId",
+            "description": "JIRA Board Id"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "number": {
+                  "description": "Sprint Id",
+                  "title": "sprintId",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "number"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Initialize_issues": {
+          "runAfter": {
+            "Set_StoryPoints_field": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "issues",
+                "type": "array",
+                "value": []
+              }
+            ]
+          }
+        },
+        "Show_issues": {
+          "runAfter": {
+            "For_each_issue": [
+              "Succeeded"
+            ]
+          },
+          "type": "Compose",
+          "inputs": "@variables('issues')"
+        },
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Show_issues": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "issues": {
+                  "title": "Issues",
+                  "description": "All sprint issues from a JIRA board as json formatted",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "totalstorypoints": {
+                  "title": "totalStoryPoints",
+                  "description": "Total Story Points in all sprints",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "issues": "@{body('Select_issue_fields')}",
+              "totalstorypoints": "@variables('totalStoryPoints')"
+            }
+          }
+        },
+        "Get_Fields": {
+          "runAfter": {
+            "Initialize_storyPointsField": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "Accept": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "GetFields",
+              "connectionName": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec"
+            }
+          }
+        },
+        "Parse_fields_as_JSON": {
+          "runAfter": {
+            "Get_Fields": [
+              "Succeeded"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_Fields')",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "custom": {
+                    "type": "boolean"
+                  },
+                  "orderable": {
+                    "type": "boolean"
+                  },
+                  "navigable": {
+                    "type": "boolean"
+                  },
+                  "searchable": {
+                    "type": "boolean"
+                  },
+                  "clauseNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "system": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "untranslatedName": {
+                    "type": "string"
+                  },
+                  "scope": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "project": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "key",
+                  "name",
+                  "custom",
+                  "orderable",
+                  "navigable",
+                  "searchable",
+                  "clauseNames"
+                ]
+              }
+            }
+          }
+        },
+        "Filter_fields_array_": {
+          "runAfter": {
+            "Parse_fields_as_JSON": [
+              "Succeeded"
+            ]
+          },
+          "type": "Query",
+          "inputs": {
+            "from": "@body('Parse_fields_as_JSON')",
+            "where": "@equals(item()['name'],'Story Points')"
+          }
+        },
+        "Initialize_storyPointsField": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "storyPointsField",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_totalStoryPoints": {
+          "runAfter": {
+            "Initialize_issues": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "totalStoryPoints",
+                "type": "integer",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "Set_StoryPoints_field": {
+          "runAfter": {
+            "Filter_fields_array_": [
+              "Succeeded"
+            ]
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "storyPointsField",
+            "value": "@body('Filter_fields_array_')[0]['key']"
+          }
+        },
+        "Get_board_issues_for_sprint": {
+          "runAfter": {
+            "Initialize_totalStoryPoints": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "boardId": "@parameters('JIRA Board Id (crafa_jiraBoardId)')",
+              "sprintId": "@triggerBody()?['number']",
+              "Accept": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "GetBoardIssuesSprint",
+              "connectionName": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec"
+            }
+          }
+        },
+        "Parse_issues_as_JSON": {
+          "runAfter": {
+            "Get_board_issues_for_sprint": [
+              "Succeeded"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_board_issues_for_sprint')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "expand": {
+                  "type": "string"
+                },
+                "startAt": {
+                  "type": "integer"
+                },
+                "maxResults": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "expand": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "self": {
+                        "type": "string"
+                      },
+                      "key": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "object",
+                        "properties": {
+                          "statuscategorychangedate": {
+                            "type": "string"
+                          },
+                          "issuetype": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "iconUrl": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "subtask": {
+                                "type": "boolean"
+                              },
+                              "avatarId": {
+                                "type": "integer"
+                              },
+                              "hierarchyLevel": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "timespent": {},
+                          "sprint": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "self": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "startDate": {
+                                "type": "string"
+                              },
+                              "endDate": {
+                                "type": "string"
+                              },
+                              "goal": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "customfield_10030": {},
+                          "project": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "projectTypeKey": {
+                                "type": "string"
+                              },
+                              "simplified": {
+                                "type": "boolean"
+                              },
+                              "avatarUrls": {
+                                "type": "object",
+                                "properties": {
+                                  "48x48": {
+                                    "type": "string"
+                                  },
+                                  "24x24": {
+                                    "type": "string"
+                                  },
+                                  "16x16": {
+                                    "type": "string"
+                                  },
+                                  "32x32": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "customfield_10031": {},
+                          "customfield_10032": {},
+                          "customfield_10033": {},
+                          "fixVersions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "self": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "archived": {
+                                  "type": "boolean"
+                                },
+                                "released": {
+                                  "type": "boolean"
+                                },
+                                "releaseDate": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "customfield_10034": {
+                            "type": "array"
+                          },
+                          "aggregatetimespent": {},
+                          "resolution": {},
+                          "customfield_10035": {},
+                          "customfield_10036": {},
+                          "customfield_10027": {},
+                          "customfield_10028": {},
+                          "customfield_10029": {},
+                          "resolutiondate": {},
+                          "workratio": {
+                            "type": "integer"
+                          },
+                          "issuerestriction": {
+                            "type": "object",
+                            "properties": {
+                              "issuerestrictions": {
+                                "type": "object",
+                                "properties": {}
+                              },
+                              "shouldDisplay": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "watches": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "watchCount": {
+                                "type": "integer"
+                              },
+                              "isWatching": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "lastViewed": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "created": {
+                            "type": "string"
+                          },
+                          "epic": {},
+                          "priority": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "iconUrl": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array"
+                          },
+                          "customfield_10018": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "hasEpicLinkFieldDependency": {
+                                "type": "boolean"
+                              },
+                              "showField": {
+                                "type": "boolean"
+                              },
+                              "nonEditableReason": {
+                                "type": "object",
+                                "properties": {
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "timeestimate": {},
+                          "aggregatetimeoriginalestimate": {},
+                          "versions": {
+                            "type": "array"
+                          },
+                          "issuelinks": {
+                            "type": "array"
+                          },
+                          "assignee": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "emailAddress": {
+                                "type": "string"
+                              },
+                              "avatarUrls": {
+                                "type": "object",
+                                "properties": {
+                                  "48x48": {
+                                    "type": "string"
+                                  },
+                                  "24x24": {
+                                    "type": "string"
+                                  },
+                                  "16x16": {
+                                    "type": "string"
+                                  },
+                                  "32x32": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "displayName": {
+                                "type": "string"
+                              },
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              },
+                              "accountType": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "updated": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "iconUrl": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "statusCategory": {
+                                "type": "object",
+                                "properties": {
+                                  "self": {
+                                    "type": "string"
+                                  },
+                                  "id": {
+                                    "type": "integer"
+                                  },
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "colorName": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "components": {
+                            "type": "array"
+                          },
+                          "timeoriginalestimate": {},
+                          "description": {},
+                          "timetracking": {
+                            "type": "object",
+                            "properties": {}
+                          },
+                          "security": {},
+                          "aggregatetimeestimate": {},
+                          "attachment": {
+                            "type": "array"
+                          },
+                          "flagged": {
+                            "type": "boolean"
+                          },
+                          "summary": {
+                            "type": "string"
+                          },
+                          "creator": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "emailAddress": {
+                                "type": "string"
+                              },
+                              "avatarUrls": {
+                                "type": "object",
+                                "properties": {
+                                  "48x48": {
+                                    "type": "string"
+                                  },
+                                  "24x24": {
+                                    "type": "string"
+                                  },
+                                  "16x16": {
+                                    "type": "string"
+                                  },
+                                  "32x32": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "displayName": {
+                                "type": "string"
+                              },
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              },
+                              "accountType": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "subtasks": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                },
+                                "self": {
+                                  "type": "string"
+                                },
+                                "fields": {
+                                  "type": "object",
+                                  "properties": {
+                                    "summary": {
+                                      "type": "string"
+                                    },
+                                    "status": {
+                                      "type": "object",
+                                      "properties": {
+                                        "self": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "iconUrl": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "statusCategory": {
+                                          "type": "object",
+                                          "properties": {
+                                            "self": {
+                                              "type": "string"
+                                            },
+                                            "id": {
+                                              "type": "integer"
+                                            },
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "colorName": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "priority": {
+                                      "type": "object",
+                                      "properties": {
+                                        "self": {
+                                          "type": "string"
+                                        },
+                                        "iconUrl": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "id": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "issuetype": {
+                                      "type": "object",
+                                      "properties": {
+                                        "self": {
+                                          "type": "string"
+                                        },
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "iconUrl": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "subtask": {
+                                          "type": "boolean"
+                                        },
+                                        "avatarId": {
+                                          "type": "integer"
+                                        },
+                                        "hierarchyLevel": {
+                                          "type": "integer"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "reporter": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "emailAddress": {
+                                "type": "string"
+                              },
+                              "avatarUrls": {
+                                "type": "object",
+                                "properties": {
+                                  "48x48": {
+                                    "type": "string"
+                                  },
+                                  "24x24": {
+                                    "type": "string"
+                                  },
+                                  "16x16": {
+                                    "type": "string"
+                                  },
+                                  "32x32": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "displayName": {
+                                "type": "string"
+                              },
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              },
+                              "accountType": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "aggregateprogress": {
+                            "type": "object",
+                            "properties": {
+                              "progress": {
+                                "type": "integer"
+                              },
+                              "total": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "environment": {},
+                          "duedate": {},
+                          "progress": {
+                            "type": "object",
+                            "properties": {
+                              "progress": {
+                                "type": "integer"
+                              },
+                              "total": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "votes": {
+                            "type": "object",
+                            "properties": {
+                              "self": {
+                                "type": "string"
+                              },
+                              "votes": {
+                                "type": "integer"
+                              },
+                              "hasVoted": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "comment": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "comments": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "self": {
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "author": {
+                                      "type": "object",
+                                      "properties": {
+                                        "self": {
+                                          "type": "string"
+                                        },
+                                        "accountId": {
+                                          "type": "string"
+                                        },
+                                        "emailAddress": {
+                                          "type": "string"
+                                        },
+                                        "avatarUrls": {
+                                          "type": "object",
+                                          "properties": {
+                                            "48x48": {
+                                              "type": "string"
+                                            },
+                                            "24x24": {
+                                              "type": "string"
+                                            },
+                                            "16x16": {
+                                              "type": "string"
+                                            },
+                                            "32x32": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        },
+                                        "displayName": {
+                                          "type": "string"
+                                        },
+                                        "active": {
+                                          "type": "boolean"
+                                        },
+                                        "timeZone": {
+                                          "type": "string"
+                                        },
+                                        "accountType": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "body": {
+                                      "type": "string"
+                                    },
+                                    "updateAuthor": {
+                                      "type": "object",
+                                      "properties": {
+                                        "self": {
+                                          "type": "string"
+                                        },
+                                        "accountId": {
+                                          "type": "string"
+                                        },
+                                        "emailAddress": {
+                                          "type": "string"
+                                        },
+                                        "avatarUrls": {
+                                          "type": "object",
+                                          "properties": {
+                                            "48x48": {
+                                              "type": "string"
+                                            },
+                                            "24x24": {
+                                              "type": "string"
+                                            },
+                                            "16x16": {
+                                              "type": "string"
+                                            },
+                                            "32x32": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        },
+                                        "displayName": {
+                                          "type": "string"
+                                        },
+                                        "active": {
+                                          "type": "boolean"
+                                        },
+                                        "timeZone": {
+                                          "type": "string"
+                                        },
+                                        "accountType": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "created": {
+                                      "type": "string"
+                                    },
+                                    "updated": {
+                                      "type": "string"
+                                    },
+                                    "jsdPublic": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                }
+                              },
+                              "self": {
+                                "type": "string"
+                              },
+                              "maxResults": {
+                                "type": "integer"
+                              },
+                              "total": {
+                                "type": "integer"
+                              },
+                              "startAt": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "worklog": {
+                            "type": "object",
+                            "properties": {
+                              "startAt": {
+                                "type": "integer"
+                              },
+                              "maxResults": {
+                                "type": "integer"
+                              },
+                              "total": {
+                                "type": "integer"
+                              },
+                              "worklogs": {
+                                "type": "array"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Select_issue_fields": {
+          "runAfter": {
+            "Parse_issues_as_JSON": [
+              "Succeeded"
+            ]
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@body('Parse_issues_as_JSON')?['issues']",
+            "select": {
+              "id": "@item()?['id']",
+              "key": "@item()?['key']",
+              "issueType": "@{item()?['fields']?['issuetype/name']}",
+              "isSubTask": "@{item()?['fields']?['issuetype/subtask']}",
+              "sprint": "@{item()?['fields']?['sprint/id']}",
+              "sprintState": "@{item()?['fields']?['sprint/state']}",
+              "sprintStartDate": "@{item()?['fields']?['sprint/startDate']}",
+              "sprintEndDate": "@{item()?['fields']?['sprint/endDate']}",
+              "priority": "@{item()?['fields']?['priority/name']}",
+              "creatorEmail": "@{item()?['fields']?['creator/emailAddress']}",
+              "creatorDisplayName": "@{item()?['fields']?['creator/displayName']}",
+              "storyPoints": "@item()?['fields']?[variables('storyPointsField')]",
+              "assignee": "@item()?['fields']?['assignee/displayName']"
+            }
+          }
+        },
+        "For_each_issue": {
+          "foreach": "@body('Select_issue_fields')",
+          "actions": {
+            "Increment_totalStoryPoints": {
+              "runAfter": {
+                "Compose": [
+                  "Succeeded"
+                ]
+              },
+              "type": "IncrementVariable",
+              "inputs": {
+                "name": "totalStoryPoints",
+                "value": "@int(items('For_each_issue')?['storyPoints'])"
+              }
+            },
+            "Compose": {
+              "type": "Compose",
+              "inputs": "@items('For_each_issue')?['storyPoints']"
+            }
+          },
+          "runAfter": {
+            "Select_issue_fields": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

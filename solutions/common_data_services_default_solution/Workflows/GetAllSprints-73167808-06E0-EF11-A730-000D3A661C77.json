@@ -1,0 +1,194 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec": {
+        "api": {
+          "name": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec",
+          "logicalName": "new_jira-20api"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedjira20api5f69fe2589636e6ebc5f63eedd85936a24ec_e6eb7"
+        },
+        "runtimeSource": "invoker"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "undefined",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "JIRA Board Id (crafa_jiraBoardId)": {
+          "defaultValue": "1",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_jiraBoardId",
+            "description": "JIRA Board Id"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "Parse_sprints_from_Jira_Board_as_JSON": {
+          "runAfter": {
+            "Get_all_sprints": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9c51770a-4d1f-4ff9-9ff3-5c1529bf2d28"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_all_sprints')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "maxResults": {
+                  "type": "integer"
+                },
+                "startAt": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                },
+                "isLast": {
+                  "type": "boolean"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "self": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "goal": {
+                        "type": "string"
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "originBoardId": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "self",
+                      "state",
+                      "name",
+                      "startDate",
+                      "endDate"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Select_and_name_sprint_fields": {
+          "runAfter": {
+            "Parse_sprints_from_Jira_Board_as_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "314c6454-35e4-4770-be78-915d15939be2"
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@body('Parse_sprints_from_Jira_Board_as_JSON')?['values']",
+            "select": {
+              "id": "@item()?['id']",
+              "name": "@item()?['name']",
+              "state": "@item()?['state']",
+              "sprintstartDate": "@formatDateTime(item()?['startDate'],'yyyy-MM-dd')",
+              "sprintendDate": "@formatDateTime(item()?['endDate'],'yyyy-MM-dd')"
+            }
+          }
+        },
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Select_and_name_sprint_fields": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sprints": {
+                  "title": "Sprints",
+                  "description": "Sprints with all the info with dates, state as json formatted",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "sprints": "@{body('Select_and_name_sprint_fields')}"
+            }
+          }
+        },
+        "Get_all_sprints": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "boardId": "@parameters('JIRA Board Id (crafa_jiraBoardId)')",
+              "state": "active,future",
+              "Content-Type": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "GetAllSprints",
+              "connectionName": "shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec"
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

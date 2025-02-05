@@ -1,0 +1,239 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_approvals": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "crafa_sharedapprovals_47826"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      },
+      "shared_teams": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "crafa_sharedteams_47132"
+        },
+        "api": {
+          "name": "shared_teams"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Manager Email (crafa_manager_email)": {
+          "defaultValue": "david.castro@fake.expium.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_manager_email",
+            "description": "Manager Email"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Requestor email adddress",
+                  "format": "email",
+                  "title": "RequestorEmail",
+                  "type": "string",
+                  "x-ms-content-hint": "EMAIL",
+                  "x-ms-dynamically-added": true
+                },
+                "date": {
+                  "description": "Please enter a start date for the time off request (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "StartDate",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "date_1": {
+                  "description": "Please enter an end date for the time off request (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "EndDate",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "number": {
+                  "description": "Total hours requested",
+                  "title": "TotalHours",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                },
+                "text": {
+                  "description": "The type of time off requested (e.g., Vacation, Sick, etc.). ",
+                  "title": "TimeOffType",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Reason of the time off request",
+                  "title": "Reason",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "Comments",
+                  "title": "Comments",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Time off balance",
+                  "title": "Balance",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "email",
+                "date",
+                "date_1",
+                "number",
+                "text",
+                "text_1",
+                "text_2",
+                "text_3"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Create_an_approval": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "approvalType": "Basic",
+              "ApprovalCreationInput/title": "Time Off Approval Request",
+              "ApprovalCreationInput/assignedTo": "@parameters('Manager Email (crafa_manager_email)')",
+              "ApprovalCreationInput/details": "Please review and approve or reject this Time Off Request\n\n- **From:** @{triggerBody()?['email']}\n- **Start Date:** @{triggerBody()?['date']}\n- **End Date:** @{triggerBody()?['date_1']}\n- **Total Hours:** @{triggerBody()?['number']}\n- **Balance:** @{triggerBody()?['text_3']}\n- **Type:** @{triggerBody()?['text']}\n- **Reason:** @{triggerBody()?['text_1']}\n\n- **Comments from TimeWarden:** @{triggerBody()?['text_2']}",
+              "ApprovalCreationInput/enableNotifications": false,
+              "ApprovalCreationInput/enableReassignment": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+              "operationId": "CreateAnApproval",
+              "connectionName": "shared_approvals"
+            }
+          }
+        },
+        "Wait_for_an_approval": {
+          "runAfter": {
+            "Post_card_in_a_chat_or_channel": [
+              "Succeeded"
+            ]
+          },
+          "limit": {
+            "timeout": "P1D"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "approvalName": "@outputs('Create_an_approval')?['body/name']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+              "operationId": "WaitForAnApproval",
+              "connectionName": "shared_approvals"
+            }
+          }
+        },
+        "Post_card_in_a_chat_or_channel": {
+          "runAfter": {
+            "Create_an_approval": [
+              "Succeeded"
+            ]
+          },
+          "limit": {
+            "timeout": "P1D"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "poster": "Flow bot",
+              "location": "Chat with Flow bot",
+              "body/recipient": "@parameters('Manager Email (crafa_manager_email)')",
+              "body/messageBody": "@outputs('Create_an_approval')?['body/adaptiveCard']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+              "operationId": "PostCardToConversation",
+              "connectionName": "shared_teams"
+            }
+          }
+        },
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Wait_for_an_approval": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isrequestapproved": {
+                  "title": "IsRequestApproved",
+                  "description": "Approved or Rejected Request",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "managercomments": {
+                  "title": "ManagerComments",
+                  "description": "Comments from the manager approval",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "isrequestapproved": "@{outputs('Wait_for_an_approval')?['body/outcome']}",
+              "managercomments": "@{coalesce(first(outputs('Wait_for_an_approval')?['body/responses'])?['comments'],'No comments')}"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": "8966f0978a80430098d992ce322095e3"
+  },
+  "schemaVersion": "1.0.0.0"
+}

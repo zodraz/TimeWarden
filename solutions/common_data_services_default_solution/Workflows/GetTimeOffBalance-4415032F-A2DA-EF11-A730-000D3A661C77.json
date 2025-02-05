@@ -1,0 +1,200 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcrafa5fbamboohr20api5f69fe2589636e6ebc_4571b"
+        },
+        "api": {
+          "name": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc",
+          "logicalName": "crafa_5Fbamboohr-20api"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Company Domain for BambooHR (crafa_bamboohr_companyDomain)": {
+          "defaultValue": "bamboohrcopilot1",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_bamboohr_companyDomain",
+            "description": "Company domain for BambooHR connection"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Employeed Id number",
+                  "title": "EmployeeId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "The type of time off requested (e.g., Vacation, Sick, etc.). ",
+                  "title": "TimeOffType",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "date": {
+                  "description": "Please enter or select a end date (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "EndDate",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "date"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Parse_time_off_balance_estimation_JSON": {
+          "runAfter": {
+            "Estimate_Future_Time_Off_Balances": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6fecea04-c19d-49bf-aded-7b566a1cfd38"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Estimate_Future_Time_Off_Balances')",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timeOffType": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "units": {
+                    "type": "string"
+                  },
+                  "balance": {
+                    "type": "string"
+                  },
+                  "end": {
+                    "type": "string"
+                  },
+                  "policyType": {
+                    "type": "string"
+                  },
+                  "usedYearToDate": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "timeOffType",
+                  "name",
+                  "units",
+                  "balance",
+                  "end",
+                  "policyType",
+                  "usedYearToDate"
+                ]
+              }
+            }
+          }
+        },
+        "Estimate_Future_Time_Off_Balances": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "28cc6096-8dd6-46b8-9afa-a10aa1463565"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "companyDomain": "@parameters('Company Domain for BambooHR (crafa_bamboohr_companyDomain)')",
+              "employeeId": "@triggerBody()?['text']",
+              "end": "@triggerBody()?['date']",
+              "Accept": "application/json"
+            },
+            "host": {
+              "apiId": "",
+              "operationId": "EstimateFutureTimeOffBalances",
+              "connectionName": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc"
+            }
+          }
+        },
+        "Filter_balances_estimation": {
+          "runAfter": {
+            "Parse_time_off_balance_estimation_JSON": [
+              "Succeeded"
+            ]
+          },
+          "type": "Query",
+          "inputs": {
+            "from": "@body('Parse_time_off_balance_estimation_JSON')",
+            "where": "@equals(item()['name'],triggerBody()?['text_1'])"
+          }
+        },
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Filter_balances_estimation": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "balance": {
+                  "title": "Balance",
+                  "x-ms-dynamically-added": true,
+                  "type": "string",
+                  "description": "Time off balance"
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "balance": "@{first(body('Filter_balances_estimation'))?['balance']}"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

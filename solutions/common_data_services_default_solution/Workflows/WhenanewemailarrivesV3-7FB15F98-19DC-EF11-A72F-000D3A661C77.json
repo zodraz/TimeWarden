@@ -1,0 +1,288 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crafa_sharedoffice365_d0af2"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_conversionservice-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedconversionservice_bee04"
+        },
+        "api": {
+          "name": "shared_conversionservice"
+        }
+      },
+      "shared_commondataserviceforapps": {
+        "impersonation": {},
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_e1233"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_approvals": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "crafa_sharedapprovals_47826"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      },
+      "shared_microsoftcopilotstudio": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedmicrosoftcopilotstudio_ed6d0"
+        },
+        "api": {
+          "name": "shared_microsoftcopilotstudio"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Manager Email (crafa_manager_email)": {
+          "defaultValue": "david.castro@fake.expium.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_manager_email",
+            "description": "Manager Email"
+          }
+        }
+      },
+      "triggers": {
+        "When_a_new_email_arrives_(V3)": {
+          "metadata": {
+            "Id::AAMkADQxY2IyNTc0LWNhMTctNDcwMC1hMzYxLTU1YjAxODMyZGI1NwAuAAAAAAD37r_IJ17sQoPhjQl3dV9mAQAmX6cP-h0HRpHZ9zPPxWbwAAAAAAEMAAA=": "Inbox"
+          },
+          "type": "OpenApiConnectionNotification",
+          "inputs": {
+            "parameters": {
+              "to": "@parameters('Manager Email (crafa_manager_email)')",
+              "folderPath": "Id::AAMkADQxY2IyNTc0LWNhMTctNDcwMC1hMzYxLTU1YjAxODMyZGI1NwAuAAAAAAD37r_IJ17sQoPhjQl3dV9mAQAmX6cP-h0HRpHZ9zPPxWbwAAAAAAEMAAA="
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+              "operationId": "OnNewEmailV3",
+              "connectionName": "shared_office365"
+            }
+          }
+        }
+      },
+      "actions": {
+        "Html_to_text": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "Content": "<p class=\"editor-paragraph\">Subject: @{triggerOutputs()?['body/value'][0]['subject']}<br>Body: @{triggerOutputs()?['body/value'][0]['body']}</p>"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_conversionservice",
+              "operationId": "HtmlToText",
+              "connectionName": "shared_conversionservice-1"
+            }
+          }
+        },
+        "Time_Off_Request_Categorizer_Agent": {
+          "runAfter": {
+            "Html_to_text": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "recordId": "3baaf094-5e2b-47dc-8574-89f30ba4d35f",
+              "item/requestv2/mail": "@body('Html_to_text')",
+              "item/requestv2/categories": "Vacation, Sick, COVID-19 Related Absence, Bereavement, Comp/In Lieu Time, FMLA."
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "aibuilderpredict_customprompt",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          }
+        },
+        "Start_and_wait_for_an_approval_of_text_Categorizer_Agent": {
+          "runAfter": {
+            "Time_Off_Request_Categorizer_Agent": [
+              "Succeeded"
+            ]
+          },
+          "limit": {
+            "timeout": "PT0S"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "WebhookTextSuggestionApprovalCreationInput/title": "Auto approve",
+              "WebhookTextSuggestionApprovalCreationInput/suggestedText": "Auto approve ",
+              "WebhookTextSuggestionApprovalCreationInput/assignedTo": "@parameters('Manager Email (crafa_manager_email)')",
+              "WebhookTextSuggestionApprovalCreationInput/enableNotifications": false,
+              "WebhookTextSuggestionApprovalCreationInput/enableReassignment": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+              "operationId": "StartAndWaitForATextSuggestionApproval",
+              "connectionName": "shared_approvals"
+            }
+          }
+        },
+        "Condition": {
+          "actions": {
+            "Email_Time_Off_Field_Extractor_Agent": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "recordId": "dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec",
+                  "item/requestv2/timeOffType": "@body('Parse_Time_Off_Categorizer_Request_as_JSON')?['category']",
+                  "item/requestv2/text": "Subject: @{triggerOutputs()?['body/value'][0]['subject']}\nBody: @{triggerOutputs()?['body/value'][0]['body']}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "aibuilderpredict_customprompt",
+                  "connectionName": "shared_commondataserviceforapps"
+                }
+              }
+            },
+            "Start_and_wait_for_an_approval_of_text_Extractor_Agent": {
+              "runAfter": {
+                "Email_Time_Off_Field_Extractor_Agent": [
+                  "Succeeded"
+                ]
+              },
+              "limit": {
+                "timeout": "PT0S"
+              },
+              "type": "OpenApiConnectionWebhook",
+              "inputs": {
+                "parameters": {
+                  "WebhookTextSuggestionApprovalCreationInput/title": "Auto approve",
+                  "WebhookTextSuggestionApprovalCreationInput/suggestedText": "Auto approve",
+                  "WebhookTextSuggestionApprovalCreationInput/assignedTo": "@parameters('Manager Email (crafa_manager_email)')",
+                  "WebhookTextSuggestionApprovalCreationInput/enableNotifications": false,
+                  "WebhookTextSuggestionApprovalCreationInput/enableReassignment": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+                  "operationId": "StartAndWaitForATextSuggestionApproval",
+                  "connectionName": "shared_approvals"
+                }
+              }
+            },
+            "Set_missingFields": {
+              "runAfter": {
+                "Start_and_wait_for_an_approval_of_text_Extractor_Agent": [
+                  "TimedOut"
+                ]
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "missingFields",
+                "value": "@outputs('Email_Time_Off_Field_Extractor_Agent')?['body/responsev2/predictionOutput/text']"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_missingFields": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@body('Parse_Time_Off_Categorizer_Request_as_JSON')?['time_off_request']",
+                  true
+                ]
+              }
+            ]
+          },
+          "type": "If"
+        },
+        "Sends_a_prompt_to_the_specified_copilot": {
+          "runAfter": {
+            "Condition": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "Copilot": "crc28_timeWardenV2",
+              "body/message": "Sender email is @{triggerOutputs()?['body/value'][0]['from']}\n@{outputs('Time_Off_Request_Categorizer_Agent')?['body/responsev2/predictionOutput/text']}\n@{variables('missingFields')}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_microsoftcopilotstudio",
+              "operationId": "ExecuteCopilot",
+              "connectionName": "shared_microsoftcopilotstudio"
+            }
+          }
+        },
+        "Initialize_missingFields": {
+          "runAfter": {
+            "Parse_Time_Off_Categorizer_Request_as_JSON": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "missingFields",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Parse_Time_Off_Categorizer_Request_as_JSON": {
+          "runAfter": {
+            "Start_and_wait_for_an_approval_of_text_Categorizer_Agent": [
+              "TimedOut"
+            ]
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@outputs('Time_Off_Request_Categorizer_Agent')?['body/responsev2/predictionOutput/text']",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "time_off_request": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

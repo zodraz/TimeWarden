@@ -1,0 +1,169 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "impersonation": {},
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_e1233"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_approvals": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "crafa_sharedapprovals_47826"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Manager Email (crafa_manager_email)": {
+          "defaultValue": "david.castro@fake.expium.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_manager_email",
+            "description": "Manager Email"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Sprints as JSON",
+                  "title": "Sprints",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "date": {
+                  "description": "Please enter or select a date (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "Start Date",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "date_1": {
+                  "description": "Please enter or select a date (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "End Date",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "date",
+                "date_1"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Start_and_wait_for_an_approval_of_text_Sprint_Classifier_Agent": [
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sprintstate": {
+                  "title": "sprintState",
+                  "description": "The state of the sprint of the requested time off",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "sprintstate": "@{outputs('Sprint_classifier_Agent')?['body/responsev2/predictionOutput/text']}"
+            }
+          }
+        },
+        "Sprint_classifier_Agent": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "recordId": "fe2fc328-9ec2-476f-80f6-4b93cfa4f50c",
+              "item/requestv2/StartDate": "@triggerBody()?['date']",
+              "item/requestv2/EndDate": "@triggerBody()?['date_1']",
+              "item/requestv2/sprints": "@triggerBody()?['text']"
+            },
+            "host": {
+              "apiId": "providers/Microsoft.ProcessSimple/operationGroups/aibuilder",
+              "operationId": "aibuilderpredict_customprompt",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          }
+        },
+        "Start_and_wait_for_an_approval_of_text_Sprint_Classifier_Agent": {
+          "runAfter": {
+            "Sprint_classifier_Agent": [
+              "Succeeded"
+            ]
+          },
+          "limit": {
+            "timeout": "PT0S"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "WebhookTextSuggestionApprovalCreationInput/title": "Auto approve",
+              "WebhookTextSuggestionApprovalCreationInput/suggestedText": "Auto approve",
+              "WebhookTextSuggestionApprovalCreationInput/assignedTo": "@parameters('Manager Email (crafa_manager_email)')",
+              "WebhookTextSuggestionApprovalCreationInput/enableNotifications": false,
+              "WebhookTextSuggestionApprovalCreationInput/enableReassignment": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+              "operationId": "StartAndWaitForATextSuggestionApproval",
+              "connectionName": "shared_approvals"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": "8966f0978a80430098d992ce322095e3"
+  },
+  "schemaVersion": "1.0.0.0"
+}

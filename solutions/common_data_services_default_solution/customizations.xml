@@ -1,0 +1,769 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25014.158" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25014.00162">
+  <Entities></Entities>
+  <Roles></Roles>
+  <Workflows>
+    <Workflow WorkflowId="{14728e28-69db-ef11-a72f-000d3a661c77}" Name="Time Off Manager Approval" Description="Run a flow from Copilot and send back a response requesting a Teams approval from the manager.">
+      <JsonFileName>/Workflows/TimeOffManagerApproval-14728E28-69DB-EF11-A72F-000D3A661C77.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Time Off Manager Approval" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="Run a flow from Copilot and send back a response requesting a Teams approval from the manager." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{7fb15f98-19dc-ef11-a72f-000d3a661c77}" Name="When a new email arrives (V3)">
+      <JsonFileName>/Workflows/WhenanewemailarrivesV3-7FB15F98-19DC-EF11-A72F-000D3A661C77.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+    </Workflow>
+    <Workflow WorkflowId="{4415032f-a2da-ef11-a730-000d3a661c77}" Name="Get Time Off Balance" Description="This flow processes a request for time off by gathering an employee's ID, the type of time off, and an end date. It estimates future time off balances based on the provided information. The data is parsed to extract relevant details about the time off balance, including the type, name, units, balance, end date, policy type, and used year-to-date. The flow then filters the estimated balances to find the specific type of time off requested and responds with the corresponding balance, ensuring the information is structured and ready for further use.">
+      <JsonFileName>/Workflows/GetTimeOffBalance-4415032F-A2DA-EF11-A730-000D3A661C77.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Get Time Off Balance" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="This flow processes a request for time off by gathering an employee's ID, the type of time off, and an end date. It estimates future time off balances based on the provided information. The data is parsed to extract relevant details about the time off balance, including the type, name, units, balance, end date, policy type, and used year-to-date. The flow then filters the estimated balances to find the specific type of time off requested and responds with the corresponding balance, ensuring the information is structured and ready for further use." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{73167808-06e0-ef11-a730-000d3a661c77}" Name="Get All Sprints" Description="The flow retrieves active and future sprints from a specified board in a project management tool. It processes the response to extract relevant details such as sprint ID, name, state, start date, and end date. The extracted information is formatted and structured into a JSON object. Finally, the flow responds with the formatted sprint data, providing a comprehensive overview of the sprints, including their statuses and timelines, ensuring that the information is easily accessible and usable for further actions or insights.">
+      <JsonFileName>/Workflows/GetAllSprints-73167808-06E0-EF11-A730-000D3A661C77.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Get All Sprints" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="The flow retrieves active and future sprints from a specified board in a project management tool. It processes the response to extract relevant details such as sprint ID, name, state, start date, and end date. The extracted information is formatted and structured into a JSON object. Finally, the flow responds with the formatted sprint data, providing a comprehensive overview of the sprints, including their statuses and timelines, ensuring that the information is easily accessible and usable for further actions or insights." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{3480e210-c0e0-ef11-a730-000d3a661c77}" Name="Sprint Classification" Description="Run a flow from Copilot and send back a response classifying the sprint into current, outside or future.">
+      <JsonFileName>/Workflows/SprintClassification-3480E210-C0E0-EF11-A730-000D3A661C77.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Sprint Classification" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="Run a flow from Copilot and send back a response classifying the sprint into current, outside or future." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{86c028b7-9cd9-ef11-a72f-000d3ab23609}" Name="Get All Sprint Issues" Description="This flow retrieves sprint information from a project management tool based on specified states. It gathers all sprints for a given board, parses the data, and extracts relevant sprint details. It then fetches fields related to story points and collects issues associated with each sprint. The flow calculates the total story points across all issues and compiles a list of issues with their details, including assignee and creator information. Finally, it responds with a structured output containing the project information and the total story points calculated from the issues.">
+      <JsonFileName>/Workflows/GetAllSprintIssues-86C028B7-9CD9-EF11-A72F-000D3AB23609.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Get All Sprint Issues" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="This flow retrieves sprint information from a project management tool based on specified states. It gathers all sprints for a given board, parses the data, and extracts relevant sprint details. It then fetches fields related to story points and collects issues associated with each sprint. The flow calculates the total story points across all issues and compiles a list of issues with their details, including assignee and creator information. Finally, it responds with a structured output containing the project information and the total story points calculated from the issues." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{cf98eeee-a0d9-ef11-a72f-000d3ab23609}" Name="Create Time Off Request" Description="This flow processes a time off request by gathering essential information such as employee ID, approval status, start and end dates, type of time off, total hours requested, reason for the request, and manager comments. It ensures all required fields are filled before creating the request. Upon successful creation, a confirmation message is generated. The flow integrates with an external system to submit the request, including notes from both the employee and the manager. This structured approach facilitates efficient handling of time off requests within the organization.">
+      <JsonFileName>/Workflows/CreateTimeOffRequest-CF98EEEE-A0D9-EF11-A72F-000D3AB23609.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Create Time Off Request" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="This flow processes a time off request by gathering essential information such as employee ID, approval status, start and end dates, type of time off, total hours requested, reason for the request, and manager comments. It ensures all required fields are filled before creating the request. Upon successful creation, a confirmation message is generated. The flow integrates with an external system to submit the request, including notes from both the employee and the manager. This structured approach facilitates efficient handling of time off requests within the organization." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{4543ebf1-40da-ef11-a730-000d3ab23609}" Name="Validate Team Membership" Description="The flow begins by requesting an email address. It retrieves employee data from an external API and parses the information. Team member details are fetched from another service, and the flow checks if the provided email matches any team member's email. If a match is found, it confirms the email belongs to a valid team member; otherwise, it indicates the email is not associated with a team member. Finally, the flow responds with a message indicating the team membership status of the provided email address.">
+      <JsonFileName>/Workflows/ValidateTeamMembership-4543EBF1-40DA-EF11-A730-000D3AB23609.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Validate Team Membership" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="The flow begins by requesting an email address. It retrieves employee data from an external API and parses the information. Team member details are fetched from another service, and the flow checks if the provided email matches any team member's email. If a match is found, it confirms the email belongs to a valid team member; otherwise, it indicates the email is not associated with a team member. Finally, the flow responds with a message indicating the team membership status of the provided email address." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{4c8733e1-75e1-ef11-be20-002248a42c4e}" Name="Get Sprint Issues" Description="This flow retrieves sprint issues from a JIRA board based on a provided sprint ID. It first fetches the fields to identify the &quot;Story Points&quot; field. Then, it gathers issues associated with the specified sprint, extracting relevant details such as issue ID, key, type, priority, creator, assignee, and story points. The flow calculates the total story points across all issues and prepares a response containing the list of issues and the total story points. Finally, it sends this information back in a structured format.">
+      <JsonFileName>/Workflows/GetSprintIssues-4C8733E1-75E1-EF11-BE20-002248A42C4E.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Get Sprint Issues" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="This flow retrieves sprint issues from a JIRA board based on a provided sprint ID. It first fetches the fields to identify the &quot;Story Points&quot; field. Then, it gathers issues associated with the specified sprint, extracting relevant details such as issue ID, key, type, priority, creator, assignee, and story points. The flow calculates the total story points across all issues and prepares a response containing the list of issues and the total story points. Finally, it sends this information back in a structured format." />
+      </Descriptions>
+    </Workflow>
+    <Workflow WorkflowId="{aae0ad74-7ce1-ef11-be20-002248a42c4e}" Name="Get Sprint Story Points" Description="This flow retrieves the total story points for issues in a specified sprint. It starts by accepting a sprint ID, then fetches field details to identify the story points field. Next, it gathers issues associated with the sprint and filters out subtasks. The flow calculates the total story points by summing the values from the relevant field for each issue. Finally, it responds with the total story points in the selected sprint, providing a structured output that includes the total value. The process ensures accurate aggregation of story points for project management purposes.">
+      <JsonFileName>/Workflows/GetSprintStoryPoints-AAE0AD74-7CE1-EF11-BE20-002248A42C4E.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.12</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Get Sprint Story Points" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description languagecode="1033" description="This flow retrieves the total story points for issues in a specified sprint. It starts by accepting a sprint ID, then fetches field details to identify the story points field. Next, it gathers issues associated with the sprint and filters out subtasks. The flow calculates the total story points by summing the values from the relevant field for each issue. Finally, it responds with the total story points in the selected sprint, providing a structured output that includes the total value. The process ensures accurate aggregation of story points for project management purposes." />
+      </Descriptions>
+    </Workflow>
+  </Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <Connectors>
+    <Connector>
+      <connectorid>0041f980-ec5f-408b-9a0a-154af36a42e5</connectorid>
+      <description>REST API for Jira which is a software product developed by Atlassian that allows bug tracking, issue tracking and agile project management.</description>
+      <displayname>JIRA API</displayname>
+      <iconbrandcolor>#D3E3FD</iconbrandcolor>
+      <name>new_jira-20api</name>
+      <connectortype>1</connectortype>
+      <openapidefinition>/Connector/new_jira-20api_openapidefinition.json</openapidefinition>
+      <connectionparameters>/Connector/new_jira-20api_connectionparameters.json</connectionparameters>
+      <policytemplateinstances>/Connector/new_jira-20api_policytemplateinstances.json</policytemplateinstances>
+      <iconblob>/Connector/new_jira-20api_iconblob.Jpeg</iconblob>
+    </Connector>
+    <Connector>
+      <connectorid>33604667-633c-4b9e-a43d-5de27f0a8b53</connectorid>
+      <description>BambooHR API for the SASS BambooHR platform that brings all your employee, payroll, time, and benefit information together in one place, giving you the data accuracy, security, and coordination you need to sleep soundly.</description>
+      <displayname>BambooHR API</displayname>
+      <iconbrandcolor>#85C03E</iconbrandcolor>
+      <name>crafa_5Fbamboohr-20api</name>
+      <connectortype>1</connectortype>
+      <openapidefinition>/Connector/crafa_5Fbamboohr-20api_openapidefinition.json</openapidefinition>
+      <connectionparameters>/Connector/crafa_5Fbamboohr-20api_connectionparameters.json</connectionparameters>
+      <policytemplateinstances>/Connector/crafa_5Fbamboohr-20api_policytemplateinstances.json</policytemplateinstances>
+      <iconblob>/Connector/crafa_5Fbamboohr-20api_iconblob.Png</iconblob>
+    </Connector>
+  </Connectors>
+  <AIModels>
+    <AIModel>
+      <msdyn_aimodelid>{fe2fc328-9ec2-476f-80f6-4b93cfa4f50c}</msdyn_aimodelid>
+      <msdyn_name>Sprint classifier</msdyn_name>
+      <msdyn_templateid>{edfdb190-3791-45d8-9a6c-8f90a37c278a}</msdyn_templateid>
+      <statecode>1</statecode>
+      <statuscode>1</statuscode>
+      <IsCustomizable>1</IsCustomizable>
+      <msdyn_activerunconfigurationid>{a6b842b8-bae0-ef11-a731-002248a42c4e}</msdyn_activerunconfigurationid>
+      <AIConfigurations>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{a6b842b8-bae0-ef11-a731-002248a42c4e}</msdyn_aiconfigurationid>
+          <msdyn_customconfiguration>{"version":"GptDynamicPrompt-2","prompt":[{"type":"literal","text":"You will receive a JSON object "},{"type":"inputVariable","id":"sprints"},{"type":"literal","text":"  containing:\nA list of sprints with their name, state, start and end dates. \nA time off request with a start "},{"type":"inputVariable","id":"StartDate"},{"type":"literal","text":"  and end date "},{"type":"inputVariable","id":"EndDate"},{"type":"literal","text":" .\nYour task is to Classify the time-off request based on sprint data:\nIdentify the current sprint (where \"state\": \"active\").\nIdentify any future sprints (where \"state\": \"future\").\nCompare the time off request dates with sprint dates and classify as:\n\"current sprint\" if both dates fall entirely within the current sprint.\n\"future sprint\" if either date falls in a future sprint.\n\"outside sprint\" if neither date overlaps with any sprint.\n\nEdge Case: If the request starts in the current sprint but extends into a future sprint, classify as \"future sprint\"."}],"definitions":{"inputs":[{"id":"sprints","text":"sprints","type":"text","quickTestValue":"[\n  {\n    \"id\": 1,\n    \"name\": \"Sprint 2\",\n    \"state\": \"active\",\n    \"startDate\": \"2025-01-29\",\n    \"endDate\": \"2025-02-12\"\n  },\n  {\n    \"id\": 3,\n    \"name\": \"Sprint 3\",\n    \"state\": \"future\",\n    \"startDate\": \"2025-02-12\",\n    \"endDate\": \"2025-02-26\"\n  }\n]"},{"id":"StartDate","text":"StartDate","type":"text","quickTestValue":"2025-02-03"},{"id":"EndDate","text":"EndDate","type":"text","quickTestValue":"2025-02-04"}],"data":[],"output":{"formats":["text"],"jsonSchema":{"type":"object","properties":{"classification":{"type":"string"}}},"jsonExamples":[{"classification":"current sprint"}]}},"modelParameters":{"modelType":"gpt-35-turbo","gptParameters":{"temperature":0}},"settings":{"recordRetrievalLimit":30}}</msdyn_customconfiguration>
+          <msdyn_majoriterationnumber>4</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_name>fe2fc328-9ec2-476f-80f6-4b93cfa4f50c_2025-02-01T16:36:49.043Z</msdyn_name>
+          <msdyn_modelrundataspecification>H4sIAAAAAAAACpWRPQvCMBCG/4rcnEUQh25+FVwUtLif9tRATULuCpbifze1lorpoFvgee/JfdSwd3RKrb+hHMiztgaSsYK1caXsrJWVES0VJDUsNbsCqw3eCBIABTMRr4+lEDeYnddGOE52QMHWSfBjAckZCyYFWeWaxD54zAUeKrzQyxKFYk2PfhGtTD6s6cAvEsxz3WYW1gjdJdbNosinWHzZe+fINJ109kfwb0v5d8vDXWTtx9EAZ200X3eE3Jz1uyp90dEbR+WhxSeFO4fWHgIAAA==</msdyn_modelrundataspecification>
+          <msdyn_type>190690001</msdyn_type>
+          <msdyn_aimodelid>{fe2fc328-9ec2-476f-80f6-4b93cfa4f50c}</msdyn_aimodelid>
+          <msdyn_trainedmodelaiconfigurationpareid>{323f01e1-b9e0-ef11-a731-002248a42c4e}</msdyn_trainedmodelaiconfigurationpareid>
+          <statecode>2</statecode>
+          <statuscode>7</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{323f01e1-b9e0-ef11-a731-002248a42c4e}</msdyn_aiconfigurationid>
+          <msdyn_databinding>{"schemaVersion":2}</msdyn_databinding>
+          <msdyn_majoriterationnumber>1</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_modeldata>905caf3b-85cd-4114-8ea9-8a40881bd11f</msdyn_modeldata>
+          <msdyn_name>fe2fc328-9ec2-476f-80f6-4b93cfa4f50c_2025-02-01T16:30:48.718Z</msdyn_name>
+          <msdyn_modelrundataspecification>
+        {
+          "schemaVersion": 2,
+          "input": {},
+          "output": {}
+        }
+      </msdyn_modelrundataspecification>
+          <msdyn_type>190690000</msdyn_type>
+          <msdyn_aimodelid>{fe2fc328-9ec2-476f-80f6-4b93cfa4f50c}</msdyn_aimodelid>
+          <statecode>2</statecode>
+          <statuscode>6</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+      </AIConfigurations>
+    </AIModel>
+    <AIModel>
+      <msdyn_aimodelid>{dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec}</msdyn_aimodelid>
+      <msdyn_name>Email Time Off field extractor</msdyn_name>
+      <msdyn_templateid>{edfdb190-3791-45d8-9a6c-8f90a37c278a}</msdyn_templateid>
+      <statecode>1</statecode>
+      <statuscode>1</statuscode>
+      <IsCustomizable>1</IsCustomizable>
+      <msdyn_activerunconfigurationid>{e7eb3222-cae0-ef11-a730-000d3a661c77}</msdyn_activerunconfigurationid>
+      <AIConfigurations>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{e7eb3222-cae0-ef11-a730-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_customconfiguration>{"version":"GptDynamicPrompt-2","prompt":[{"type":"literal","text":"You are an expert in parsing emails to extract key information related to time off requests. Your task is to read the provided "},{"type":"inputVariable","id":"text"},{"type":"literal","text":"  (subject and body) of an email and extract the following fields, including their possible synonyms:\n\n- Start Date (synonyms: start date, begin date, starting on, from, commencing on)\n- End Date (synonyms: end date, finish date, ending on, until, concluding on)\n- Reason (synonyms: reason, cause, purpose, explanation, rationale)\n- Total Hours (synonyms: total hours, duration, length, number of hours, time period)\n- Time Off Type(synonyms: time off category, category of leave, type of leave, kind of leave, nature of leave, form of leave)\n\nIf any of these fields are not present or cannot be extracted from the text, list them as missing fields otherwise specify a message that all expected fields are present on the email.\nIf the "},{"type":"inputVariable","id":"timeOffType"},{"type":"literal","text":" parameter is provided with a value take that value."}],"definitions":{"inputs":[{"id":"text","text":"text","type":"text","quickTestValue":"Subject: Leave\nBody: Dear HR, I need to take some time off due to the passing of my grandfather. I would like to request leave from June 1st to June 5th.Would total 12 hours."},{"id":"timeOffType","text":"timeOffType","type":"text","quickTestValue":"sss"}],"data":[],"output":{"formats":["text"],"jsonSchema":{"type":"object","properties":{"Start Date":{"type":"string"},"End Date":{"type":"string"},"Reason":{"type":"string"},"Total Hours":{"type":"string"},"Time Off Type":{"type":"string"},"Missing Fields":{"type":"array"}}},"jsonExamples":[{"Start Date":"June 1st","End Date":"June 5th","Reason":"due to the passing of my grandfather","Total Hours":"12 hours","Time Off Type":"sss","Missing Fields":[]}]}},"modelParameters":{"modelType":"gpt-35-turbo","gptParameters":{"temperature":0}},"settings":{"recordRetrievalLimit":30}}</msdyn_customconfiguration>
+          <msdyn_majoriterationnumber>13</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_name>dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec_2025-02-01T18:27:04.007Z</msdyn_name>
+          <msdyn_modelrundataspecification>H4sIAAAAAAAACq2RPQ+CMBCG/4q5uYuJceiGHyQukgBxr3LVJtA29EgkhP9uAY3EOji43vPec9deB5nFS2zqStAJa6eMBr5kcNC2odQY2mtS1ALvYKecLUV7FBUCB2AQEdXq3BC6ARPeKYyNVQaJJW8WJXApSocM8tYOOPMGfYWeAakKEymnemCZwV9koijUlNka/X2xKIjMxVQ3b+9GOFyvXvbe+5OG/vM9+TQ4eIBUWrlbisIN9/jsike6eOKg3a/4AKzj7HHXAQAA</msdyn_modelrundataspecification>
+          <msdyn_type>190690001</msdyn_type>
+          <msdyn_aimodelid>{dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec}</msdyn_aimodelid>
+          <msdyn_trainedmodelaiconfigurationpareid>{6042a510-5dde-ef11-a72f-000d3a661c77}</msdyn_trainedmodelaiconfigurationpareid>
+          <statecode>2</statecode>
+          <statuscode>7</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{6042a510-5dde-ef11-a72f-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_databinding>{"schemaVersion":2}</msdyn_databinding>
+          <msdyn_majoriterationnumber>1</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_modeldata>da0c16b3-22c1-49e3-9dad-add8aa0657a8</msdyn_modeldata>
+          <msdyn_name>dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec_2025-01-29T16:21:16.935Z</msdyn_name>
+          <msdyn_modelrundataspecification>
+        {
+          "schemaVersion": 2,
+          "input": {},
+          "output": {}
+        }
+      </msdyn_modelrundataspecification>
+          <msdyn_type>190690000</msdyn_type>
+          <msdyn_aimodelid>{dc1bd9f8-6bda-43b5-a7d4-5bd78de0beec}</msdyn_aimodelid>
+          <statecode>2</statecode>
+          <statuscode>6</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+      </AIConfigurations>
+    </AIModel>
+    <AIModel>
+      <msdyn_aimodelid>{3baaf094-5e2b-47dc-8574-89f30ba4d35f}</msdyn_aimodelid>
+      <msdyn_name>Time Off Request Categorizer</msdyn_name>
+      <msdyn_templateid>{edfdb190-3791-45d8-9a6c-8f90a37c278a}</msdyn_templateid>
+      <statecode>1</statecode>
+      <statuscode>1</statuscode>
+      <IsCustomizable>1</IsCustomizable>
+      <msdyn_activerunconfigurationid>{a9cd896a-cae0-ef11-a730-000d3a661c77}</msdyn_activerunconfigurationid>
+      <AIConfigurations>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{a9cd896a-cae0-ef11-a730-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_customconfiguration>{"version":"GptDynamicPrompt-2","prompt":[{"type":"literal","text":"You are an expert in analyzing emails to determine if they contain a time off request. Your task is to read the subject and body of the provided email and decide whether it is a time off request. If it is, identify the specific category of time off from the following list: "},{"type":"inputVariable","id":"categories"},{"type":"literal","text":" \nIf the email  with this text "},{"type":"inputVariable","id":"mail"},{"type":"literal","text":" does not contain a time off request, return this text \"No time off request was detected\"."}],"definitions":{"inputs":[{"id":"mail","text":"mail","type":"text","quickTestValue":"Dear Isabel,\n\nI hope this message finds you well. I would like to request time off as per the details below:\n\nStart Date: February 3, 2025\n\nEnd Date: February 4, 2025\n\nReason: Uncle died\n\nType of Time Off: Bereavement\n\nTotal Hours: 1 hour\n\nPlease let me know if you need any additional information or if there's a need for further discussion.\n\nBest regards,\n\nAnthony Zimmerman"},{"id":"categories","text":"categories","type":"text","quickTestValue":"Vacation, Sick, COVID-19 Related Absence, Bereavement, Comp/In Lieu Time, FMLA."}],"data":[],"output":{"formats":["json"],"jsonSchema":{"type":"object","properties":{"time_off_request":{"type":"boolean"},"category":{"type":"string"}}},"jsonExamples":[{"time_off_request":true,"category":"Bereavement"}]}},"modelParameters":{"modelType":"gpt-35-turbo","gptParameters":{"temperature":0}},"settings":{"recordRetrievalLimit":30}}</msdyn_customconfiguration>
+          <msdyn_majoriterationnumber>12</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_name>3baaf094-5e2b-47dc-8574-89f30ba4d35f_2025-02-01T18:29:06.496Z</msdyn_name>
+          <msdyn_modelrundataspecification>H4sIAAAAAAAACpWRT0/DMAzFvwryOZdJiENv488kLlRaq12nrHWHUZuExBFU0747yTJGIT2MHPOef362D1AZbFbaDpI3aB1pBcVCwLMyntda85Ni4hGKAzySM70cX+SAUAAIWDJb2nlGF+VBUp/bTr8CSsOBLIOhk71DAfVoolwFgtrDUUAjGffaUoL9hky0a1CybSl5HrRi/OScuMwsUzBb/8O9lw7vbr/px8AvPf93OfMp6tQ4G6AjRe51jdLFa/ytWp3Um7M8U+5C/oa9xTYljYizqdy9YRN7Xp+cBtzqrttafPfoZqbIHJdI9YdOS62QJzeeaXtRsnHS+wLlJzQGpwIAAA==</msdyn_modelrundataspecification>
+          <msdyn_type>190690001</msdyn_type>
+          <msdyn_aimodelid>{3baaf094-5e2b-47dc-8574-89f30ba4d35f}</msdyn_aimodelid>
+          <msdyn_trainedmodelaiconfigurationpareid>{f9158f7f-46de-ef11-a72f-000d3a661c77}</msdyn_trainedmodelaiconfigurationpareid>
+          <statecode>2</statecode>
+          <statuscode>7</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{f9158f7f-46de-ef11-a72f-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_databinding>{"schemaVersion":2}</msdyn_databinding>
+          <msdyn_majoriterationnumber>1</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_modeldata>2824a540-b148-4672-9987-51535cfa7d7c</msdyn_modeldata>
+          <msdyn_name>3baaf094-5e2b-47dc-8574-89f30ba4d35f_2025-01-29T13:39:41.272Z</msdyn_name>
+          <msdyn_modelrundataspecification>
+        {
+          "schemaVersion": 2,
+          "input": {},
+          "output": {}
+        }
+      </msdyn_modelrundataspecification>
+          <msdyn_type>190690000</msdyn_type>
+          <msdyn_aimodelid>{3baaf094-5e2b-47dc-8574-89f30ba4d35f}</msdyn_aimodelid>
+          <statecode>2</statecode>
+          <statuscode>6</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+      </AIConfigurations>
+    </AIModel>
+    <AIModel>
+      <msdyn_aimodelid>{0c929713-dd06-415a-8ff8-d41cbf701321}</msdyn_aimodelid>
+      <msdyn_name>Check Time Off Request</msdyn_name>
+      <msdyn_templateid>{edfdb190-3791-45d8-9a6c-8f90a37c278a}</msdyn_templateid>
+      <statecode>1</statecode>
+      <statuscode>1</statuscode>
+      <IsCustomizable>1</IsCustomizable>
+      <msdyn_activerunconfigurationid>{0dfd3e9a-4bde-ef11-a72f-000d3a661c77}</msdyn_activerunconfigurationid>
+      <AIConfigurations>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{0dfd3e9a-4bde-ef11-a72f-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_customconfiguration>{"version":"GptDynamicPrompt-2","prompt":[{"type":"literal","text":"You are an expert in analyzing emails to determine if they contain a time off request. Your task is to read the subject and body of the provided email and decide whether it is a time off request. If it is, identify the specific category of time off from the following list: "},{"type":"inputVariable","id":"categories"},{"type":"literal","text":" .\nIf the email  with this text "},{"type":"inputVariable","id":"mail"},{"type":"literal","text":" does not contain a time off request, simply state that no time off request was detected."}],"definitions":{"inputs":[{"id":"categories","text":"categories","type":"text","quickTestValue":"Vacation, Sick, COVID-19 Related Absence, Bereavement, Comp/In Lieu Time, FMLA."},{"id":"mail","text":"mail","type":"text","quickTestValue":"Example 1:\nSubject: Vacation Request\nBody: Hi, I would like to take a vacation from December 20th to January 5th. Please approve my leave.\n\nExample 2:\nSubject: Sick Leave\nBody: Hello, I am feeling unwell today and will need to take a sick day. I expect to be back tomorrow.\n\nExample 3:\nSubject: Meeting Reminder\nBody: Don't forget about the team meeting at 3 PM today.\n\nExample 4:\nSubject: Bereavement Leave\nBody: Dear HR, I need to take some time off due to the passing of my grandfather. I would like to request bereavement leave from June 1st to June 5th.\n\nExample 5:\nSubject: Comp Time Request\nBody: Hi Manager, I worked extra hours last week and would like to take comp time this Friday. Please let me know if that's okay.\n\nExample 6:\nSubject: FMLA Leave\nBody: Hello, I need to take an extended leave under FMLA as my spouse is undergoing surgery. I plan to be out from July 1st to August 1st.\n\nExample 7:\nSubject: Sick Day\nBody: Hi, I'm not feeling well today and will be taking a sick day. Please inform my team.\n\nExample 8:\nSubject: Vacation Days\nBody: Good morning, I would like to request vacation days from October 10th to October 15th. Looking forward to your approval.\n\nExample 9:\nSubject: Personal Emergency\nBody: Hi, I have a personal emergency and need to take the rest of the week off. I hope to return on Monday.\n\nExample 10:\nSubject: COVID-19 Absence\nBody: Hello, I have tested positive for COVID-19 and need to take time off until I recover. I expect to be back by next week."}],"data":[],"output":{"formats":["text"],"jsonSchema":{"type":"object","properties":{"time_off_request_detected":{"type":"boolean"},"category":{"type":"string"}}},"jsonExamples":[{"time_off_request_detected":true,"category":"Vacation"}]}},"modelParameters":{"modelType":"gpt-35-turbo","gptParameters":{"temperature":0}},"settings":{"recordRetrievalLimit":30,"shouldPreserveRecordLinks":null}}</msdyn_customconfiguration>
+          <msdyn_majoriterationnumber>2</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_name>0c929713-dd06-415a-8ff8-d41cbf701321_2025-01-29T14:16:20.152Z</msdyn_name>
+          <msdyn_modelrundataspecification>H4sIAAAAAAAACpWRywrCMBBFf0VmnY0gLrqrL3BjoYr7sR11oE1CMgWL+O/2oViNC10m994zrytsLWUr40qUPTnPRkM0VrDWtpLUGFlqYakhusKCvS2w3mBJEAEoiEUcHyoh38oZCp2M4/71bh5oChIrTRUsIDpi4UnBrratadvQ9AluCkrkIoR0v7/EMc+598yNFrpIyIoDyxAsrnpxZ+hpOnnSbw0/qeTf5XzvYtcXDgY4smZ/Tgl9e43P1KpTRw85iDct3gH/9eEe1QEAAA==</msdyn_modelrundataspecification>
+          <msdyn_type>190690001</msdyn_type>
+          <msdyn_aimodelid>{0c929713-dd06-415a-8ff8-d41cbf701321}</msdyn_aimodelid>
+          <msdyn_trainedmodelaiconfigurationpareid>{a3429546-4bde-ef11-a72f-000d3a661c77}</msdyn_trainedmodelaiconfigurationpareid>
+          <statecode>2</statecode>
+          <statuscode>7</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+        <AIConfiguration>
+          <msdyn_aiconfigurationid>{a3429546-4bde-ef11-a72f-000d3a661c77}</msdyn_aiconfigurationid>
+          <msdyn_databinding>{"schemaVersion":2}</msdyn_databinding>
+          <msdyn_majoriterationnumber>1</msdyn_majoriterationnumber>
+          <msdyn_minoriterationnumber>0</msdyn_minoriterationnumber>
+          <msdyn_modeldata>f2acbc44-d126-4ae6-b08d-ade6f9771319</msdyn_modeldata>
+          <msdyn_name>0c929713-dd06-415a-8ff8-d41cbf701321_2025-01-29T14:14:02.162Z</msdyn_name>
+          <msdyn_modelrundataspecification>
+        {
+          "schemaVersion": 2,
+          "input": {},
+          "output": {}
+        }
+      </msdyn_modelrundataspecification>
+          <msdyn_type>190690000</msdyn_type>
+          <msdyn_aimodelid>{0c929713-dd06-415a-8ff8-d41cbf701321}</msdyn_aimodelid>
+          <statecode>2</statecode>
+          <statuscode>6</statuscode>
+          <IsCustomizable>1</IsCustomizable>
+          <msdyn_templateversion>1</msdyn_templateversion>
+        </AIConfiguration>
+      </AIConfigurations>
+    </AIModel>
+  </AIModels>
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="crafa_sharedapprovals_47826">
+      <connectionreferencedisplayname>Approvals Cr15dd2-47826</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_approvals</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="crafa_sharedoffice365_d0af2">
+      <connectionreferencedisplayname>Office 365 Outlook Cr15dd2-d0af2</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="crafa_sharedteams_47132">
+      <connectionreferencedisplayname>Microsoft Teams Cr15dd2-47132</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_teams</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedcommondataserviceforapps_e1233">
+      <connectionreferencedisplayname>Microsoft Dataverse</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedconversionservice_bee04">
+      <connectionreferencedisplayname>Content Conversion</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_conversionservice</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedcrafa5fbamboohr20api5f69fe2589636e6ebc_4571b">
+      <connectionreferencedisplayname>BambooHR API</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc</connectorid>
+      <customconnectorid>
+        <connectorid>33604667-633c-4b9e-a43d-5de27f0a8b53</connectorid>
+      </customconnectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedjira20api5f69fe2589636e6ebc5f63eedd85936a24ec_e6eb7">
+      <connectionreferencedisplayname>JIRA API</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_jira-20api-5f69fe2589636e6ebc-5f63eedd85936a24ec</connectorid>
+      <customconnectorid>
+        <connectorid>0041f980-ec5f-408b-9a0a-154af36a42e5</connectorid>
+      </customconnectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedmicrosoftcopilotstudio_ed6d0">
+      <connectionreferencedisplayname>Microsoft Copilot Studio (Preview) Default-ed6d0</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_microsoftcopilotstudio</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
+  <msdyn_pminferredtasks>
+    <msdyn_pminferredtask msdyn_pminferredtaskid="5e6af392-9bd8-ef11-a72f-000d3ab23609">
+      <iscustomizable>1</iscustomizable>
+      <msdyn_automationstatus>200000000</msdyn_automationstatus>
+      <msdyn_inputdatabinding>{"ProductFlavor":"processadvisor","DataSource":{"DataSourceType":0,"CreateOrLastUpdate":"2025-01-22T08:33:55.887Z","DataSourceInfoProperties":{"flowId":"30cd391c-3634-498f-b4bd-1a80399552df","disableEditing":true,"templateId":"726f1606-7e43-49b8-8e88-fa14654e917b","reportId":"49b1bf8f-2f84-4009-b382-1b1642ba61f2","customReports":[{"templateId":"726f1606-7e43-49b8-8e88-fa14654e917b","customReportDetails":[{"reportId":"49b1bf8f-2f84-4009-b382-1b1642ba61f2","reportName":"Cloud Flow Report","pbixFileName":"CLOUDFLOW","version":"1.0","description":"This is the cloud flow Report for cloud flow template.","defaultReportConfig":"true"},{"reportId":"d73f290c-3840-4179-b9a0-3168c091867b","reportName":"Standard Report","pbixFileName":"PIPROCESS","version":"1.0","description":"This is the standard Report for every template.","defaultReportConfig":"false"}]}]}}}</msdyn_inputdatabinding>
+      <msdyn_iterationid>803c11cb13d945099e0dd0c7b87200f4-638731316408618603</msdyn_iterationid>
+      <msdyn_name>Button -&gt; Get list of issues Process</msdyn_name>
+      <msdyn_source>1</msdyn_source>
+      <statecode>4</statecode>
+      <statuscode>7</statuscode>
+      <timezoneruleversionnumber>4</timezoneruleversionnumber>
+      <msdyn_pmprocesstemplates>
+        <msdyn_pmprocesstemplate msdyn_pmprocesstemplateid="2c41ebd9-6a85-43de-9ee0-be02024b4716">
+          <iscustomizable>1</iscustomizable>
+          <msdyn_name>Button -&gt; Get list of issues Process</msdyn_name>
+          <msdyn_processdataflowconfig>{"locale":"en-US","anonymousConnection":true,"connectionType":"Blank","baseUrl":"","connectionOverrides":[],"queryMetadata":[{"queryId":"c52511ac-83af-4a24-8b7a-906511b60074","queryName":"Query","queryGroupId":null,"entityName":null,"lastKnownIsCalculatedEntity":null,"lastKnownIsLinkedEntity":null,"lastKnownIsParameter":null,"isHidden":null,"lastKnownResultTypeName":null,"loadEnabled":true,"fieldsMetadata":{},"deleteExistingDataOnLoad":false,"hostProperties":null,"jsonOutputDestinations":null,"bindToDefaultOutputDestination":null,"jsonIncrementalRefreshSettings":null,"stagingDefinition":null}],"allowNativeQueries":false,"flavorScope":["processadvisor"]}</msdyn_processdataflowconfig>
+          <msdyn_processmashupscript>section Section1;
+shared Query = let
+    FlowRunData = "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",
+    Source =
+      Csv.Document(
+        Binary.Decompress(
+          Binary.FromText(FlowRunData, BinaryEncoding.Base64),
+          Compression.GZip
+        ),
+        [
+          Delimiter = ",",
+          Columns = 9,
+          Encoding = 65001,
+          QuoteStyle = QuoteStyle.None
+        ]
+      ),
+    #"Changed column type" =
+      Table.TransformColumnTypes(
+        Source, {
+          {"Column1", type text},
+          {"Column2", type text},
+          {"Column3", type text},
+          {"Column4", type text},
+          {"Column5", type text},
+          {"Column6", type text},
+          {"Column7", type text},
+          {"Column8", type text},
+          {"Column9", type text}
+        }
+      ),
+    #"Removed top rows" =
+      Table.Skip(#"Changed column type", 1),
+    #"Promoted headers" =
+      Table.PromoteHeaders(#"Removed top rows", [PromoteAllScalars = true]),
+    #"Changed column type 1" =
+      Table.TransformColumnTypes(
+        #"Promoted headers", {
+          {"startTime", type datetime},
+          {"actionName", type text},
+          {"flowRunId", type text},
+          {"flowVersionId", Int64.Type},
+          {"actionStatus", type text},
+          {"actionStatusCode", type text},
+          {"actionError", type text},
+          {"actionId", type text},
+          {"connectorId", type text}
+        }
+      ),
+    #"Mapped to CDM" =
+      Cdm.MapToEntity(
+        #"Changed column type 1", {
+          {"startTimestamp", "startTime", type datetime},
+          {"activityName", "actionName", type text},
+          {"caseId", "flowRunId", type text},
+          {"flowVersionId", "flowVersionId"},
+          {"actionStatus", "actionStatus"},
+          {"actionStatusCode", "actionStatusCode"},
+          {"actionError", "actionError"},
+          {"actionId", "actionId"},
+          {"connectorId", "connectorId"}
+        },
+        null,
+        "Event log"
+      ),
+    #"Temp flowVersion table" =
+      Table.Sort(
+        Table.Buffer(
+          Table.SelectColumns(
+            #"Mapped to CDM",
+            {"startTimestamp", "flowVersionId"}
+          )
+        ),
+        {"startTimestamp"}
+      ),
+    #"Distinct flowVersionDate" =
+      Table.Distinct(
+        Table.RemoveColumns(
+          Table.AddColumn(
+            #"Temp flowVersion table",
+            "flowVersionDate",
+            each DateTime.ToText([startTimestamp], "MM/dd/yyyy")
+          ),
+          "startTimestamp"
+        ),
+        "flowVersionId"
+      ),
+    #"Expand flowVersion index" =
+      Table.ExpandTableColumn(
+        Table.AddColumn(
+          Table.Group(
+            #"Distinct flowVersionDate",
+            "flowVersionDate",
+            {{"GroupedData", each _, type table [ColumnToGroupBy=type, OtherColumns=type]}}
+          ),
+          "Index",
+          each Table.AddIndexColumn([GroupedData], "Index", 1, 1)
+        ),
+        "Index",
+        {"Index"},
+        {"flowVersionIndex"}
+      ),
+    #"Merged flowVersion columns" =
+      Table.RemoveColumns(
+        Table.CombineColumns(
+          Table.TransformColumnTypes(
+            #"Expand flowVersion index",
+            {{"flowVersionDate", type text},
+            {"flowVersionIndex", type text}}
+          ),
+          {"flowVersionDate", "flowVersionIndex"},
+          Combiner.CombineTextByDelimiter("-", QuoteStyle.None),
+          "mergedFlowVersion"
+        ),
+        {"GroupedData"}
+      ),
+    #"Combined flowVersion columns" =
+      Table.ReplaceValue(
+        Table.RemoveColumns(
+          Table.Join(
+            Table.AddIndexColumn(#"Distinct flowVersionDate", "Index", 1, 1),
+            "Index",
+            Table.AddIndexColumn(#"Merged flowVersion columns", "Index", 1, 1),
+            "Index"
+          ),
+          {"Index", "flowVersionDate"}
+        ),
+        "-1",
+        "",
+        Replacer.ReplaceText,
+        {"mergedFlowVersion"}
+      ),
+    #"Join flowVersionDate" =
+      Table.RenameColumns(
+        Table.RemoveColumns(
+          Table.Join(
+            #"Mapped to CDM",
+            "flowVersionId",
+            #"Combined flowVersion columns",
+            "flowVersionId"
+          ),
+          {"flowVersionId"}
+        ),
+        {"mergedFlowVersion", "flowVersionId"}
+      ),
+    #"Add startTimestampEpoch" =
+      Table.TransformColumnTypes(
+        Table.AddColumn(
+          #"Join flowVersionDate",
+          "startTimestamp.millisecondsEpoch",
+          each Duration.TotalSeconds(
+            DateTimeZone.From([startTimestamp]) - #datetimezone(1970, 1, 1, 0, 0, 0, 0, 0)
+          ) * 1000
+        ),
+        {{"startTimestamp.millisecondsEpoch", Int64.Type}}
+      ),
+    #"Replaced value" = Table.ReplaceValue(#"Add startTimestampEpoch", "", " ", Replacer.ReplaceValue, {"actionStatusCode", "actionError", "actionId", "connectorId"})
+  in
+    #"Replaced value";
+</msdyn_processmashupscript>
+          <msdyn_processminingmetadataconfig>{"ImportConfiguration":{"Attributes":[{"Name":"CaseId","SourceDataType":"String","ImportType":"Case","FinanceImportType":"None","Conversion":null,"Level":"Case","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ActivityName","SourceDataType":"String","ImportType":"Activity","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"StartTimestamp","SourceDataType":"Date","ImportType":"Start","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"FlowVersionId","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Case","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ActionStatus","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ActionStatusCode","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ActionError","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ActionId","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"ConnectorId","SourceDataType":"String","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}},{"Name":"StartTimestamp.millisecondsEpoch","SourceDataType":"Integer","ImportType":"Other","FinanceImportType":"None","Conversion":null,"Level":"Event","IsDisplayAttribute":false,"IsExcluded":false,"DefaultValue":{"ValueKind":"String"}}]},"Views":[{"Name":"Default","Calendar":null,"Filters":null}],"ProcessExtendedMetadata":{"CalculatedMetrics":[],"BusinessRules":[],"ProcessMapHierarchies":[],"CaseCategorization":null},"ReportData":null,"Calendars":null,"LastModifiedTime":"2025-01-22T08:34:44.2806207Z"}</msdyn_processminingmetadataconfig>
+          <statecode>0</statecode>
+          <statuscode>1</statuscode>
+        </msdyn_pmprocesstemplate>
+      </msdyn_pmprocesstemplates>
+    </msdyn_pminferredtask>
+  </msdyn_pminferredtasks>
+  <msdyn_pmprocessusersettings>
+    <msdyn_pmprocessusersettings msdyn_pmprocessusersettingsid="636af392-9bd8-ef11-a72f-000d3ab23609">
+      <iscustomizable>1</iscustomizable>
+      <msdyn_parenttask>
+        <msdyn_pminferredtaskid>5e6af392-9bd8-ef11-a72f-000d3ab23609</msdyn_pminferredtaskid>
+      </msdyn_parenttask>
+      <msdyn_sendanalyticsemails>1</msdyn_sendanalyticsemails>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </msdyn_pmprocessusersettings>
+  </msdyn_pmprocessusersettings>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

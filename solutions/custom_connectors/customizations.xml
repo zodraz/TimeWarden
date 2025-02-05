@@ -1,0 +1,42 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25014.158" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25014.00162">
+  <Entities></Entities>
+  <Roles></Roles>
+  <Workflows></Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <Connectors>
+    <Connector>
+      <connectorid>0041f980-ec5f-408b-9a0a-154af36a42e5</connectorid>
+      <description>REST API for Jira which is a software product developed by Atlassian that allows bug tracking, issue tracking and agile project management.</description>
+      <displayname>JIRA API</displayname>
+      <iconbrandcolor>#D3E3FD</iconbrandcolor>
+      <name>new_jira-20api</name>
+      <connectortype>1</connectortype>
+      <openapidefinition>/Connector/new_jira-20api_openapidefinition.json</openapidefinition>
+      <connectionparameters>/Connector/new_jira-20api_connectionparameters.json</connectionparameters>
+      <policytemplateinstances>/Connector/new_jira-20api_policytemplateinstances.json</policytemplateinstances>
+      <iconblob>/Connector/new_jira-20api_iconblob.Jpeg</iconblob>
+    </Connector>
+    <Connector>
+      <connectorid>33604667-633c-4b9e-a43d-5de27f0a8b53</connectorid>
+      <description>BambooHR API for the SASS BambooHR platform that brings all your employee, payroll, time, and benefit information together in one place, giving you the data accuracy, security, and coordination you need to sleep soundly.</description>
+      <displayname>BambooHR API</displayname>
+      <iconbrandcolor>#85C03E</iconbrandcolor>
+      <name>crafa_5Fbamboohr-20api</name>
+      <connectortype>1</connectortype>
+      <openapidefinition>/Connector/crafa_5Fbamboohr-20api_openapidefinition.json</openapidefinition>
+      <connectionparameters>/Connector/crafa_5Fbamboohr-20api_connectionparameters.json</connectionparameters>
+      <policytemplateinstances>/Connector/crafa_5Fbamboohr-20api_policytemplateinstances.json</policytemplateinstances>
+      <iconblob>/Connector/crafa_5Fbamboohr-20api_iconblob.Png</iconblob>
+    </Connector>
+  </Connectors>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

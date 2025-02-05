@@ -1,0 +1,222 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcrafa5fbamboohr20api5f69fe2589636e6ebc_4571b"
+        },
+        "api": {
+          "name": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc",
+          "logicalName": "crafa_5Fbamboohr-20api"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "undefined",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "Company Domain for BambooHR (crafa_bamboohr_companyDomain)": {
+          "defaultValue": "bamboohrcopilot1",
+          "type": "String",
+          "metadata": {
+            "schemaName": "crafa_bamboohr_companyDomain",
+            "description": "Company domain for BambooHR connection"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "number": {
+                  "description": "Employee Id",
+                  "title": "EmployeeId",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                },
+                "text": {
+                  "description": "Status of the manager approval",
+                  "title": "Status",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "date": {
+                  "description": "Please enter a start date for the time off request (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "StartDate",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "date_1": {
+                  "description": "Please enter an end date for the time off request (YYYY-MM-DD)",
+                  "format": "date",
+                  "title": "EndDate",
+                  "type": "string",
+                  "x-ms-content-hint": "DATE",
+                  "x-ms-dynamically-added": true
+                },
+                "number_1": {
+                  "description": "The type of time off requested (e.g., Vacation, Sick, etc.). ",
+                  "title": "TimeOffType Id",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                },
+                "number_2": {
+                  "description": "Total hours requested",
+                  "title": "TotalHours",
+                  "type": "number",
+                  "x-ms-content-hint": "NUMBER",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Reason of the time off request",
+                  "title": "Reason",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "Comments from the manager approval",
+                  "title": "ManagerComments",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "number",
+                "text",
+                "date",
+                "date_1",
+                "number_1",
+                "number_2",
+                "text_1",
+                "text_2"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Catch": [
+              "Succeeded",
+              "Skipped"
+            ]
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "title": "Result",
+                  "description": "Result message for the creation of the Time off request",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "result": "@{variables('result')}"
+            }
+          }
+        },
+        "Try": {
+          "actions": {
+            "Add_a_Time_Off_Request": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "companyDomain": "@parameters('Company Domain for BambooHR (crafa_bamboohr_companyDomain)')",
+                  "employeeId": "@triggerBody()?['number']",
+                  "body/status": "@triggerBody()?['text']",
+                  "body/start": "@triggerBody()?['date']",
+                  "body/end": "@triggerBody()?['date_1']",
+                  "body/timeOffTypeId": "@triggerBody()?['number_1']",
+                  "body/amount": "@triggerBody()?['number_2']",
+                  "body/notes": [
+                    {
+                      "from": "employee",
+                      "note": "@triggerBody()?['text_1']"
+                    },
+                    {
+                      "from": "manager",
+                      "note": "@triggerBody()?['text_2']"
+                    }
+                  ]
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc",
+                  "operationId": "AddATimeOffRequest",
+                  "connectionName": "shared_crafa-5fbamboohr-20api-5f69fe2589636e6ebc-1"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_result_message": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Initialize_result_message": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "result",
+                "type": "string",
+                "value": "Time Off Request created successfully"
+              }
+            ]
+          }
+        },
+        "Catch": {
+          "actions": {
+            "Set_success_result_message": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "result",
+                "value": "Time Off Request failed to be created"
+              }
+            }
+          },
+          "runAfter": {
+            "Try": [
+              "TimedOut",
+              "Failed"
+            ]
+          },
+          "type": "Scope"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,8 @@
+<botcomponent schemaname="crc28_timeWardenV2.component.GetSprintStoryPoints">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Get Sprint Story Points</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

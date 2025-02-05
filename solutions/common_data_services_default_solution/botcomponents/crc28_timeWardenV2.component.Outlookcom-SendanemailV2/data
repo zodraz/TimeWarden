@@ -1,0 +1,15 @@
+kind: TaskDialog
+modelDisplayName: Send Email
+modelDescription: This operation sends an email message.
+outputs:
+  - propertyName: Response
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: crc28_timeWardenV2.shared_outlook.shared-outlook-d898ddc6-2059-4279-b2ee-08671835243e
+  connectionProperties:
+    mode: Maker
+
+  operationId: SendEmailV2
+
+outputMode: Specific

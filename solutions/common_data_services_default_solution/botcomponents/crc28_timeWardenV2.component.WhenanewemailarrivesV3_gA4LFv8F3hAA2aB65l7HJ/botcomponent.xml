@@ -1,0 +1,10 @@
+<botcomponent schemaname="crc28_timeWardenV2.component.WhenanewemailarrivesV3_gA4LFv8F3hAA2aB65l7HJ">
+  <componenttype>17</componenttype>
+  <description>Trigger your agent with certain message upon event: When a new email arrives (V3).</description>
+  <iconurl>https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/releases/v1.0.1722/1.0.1722.3975/office365/icon.png</iconurl>
+  <iscustomizable>0</iscustomizable>
+  <name>When a new email arrives (V3)</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

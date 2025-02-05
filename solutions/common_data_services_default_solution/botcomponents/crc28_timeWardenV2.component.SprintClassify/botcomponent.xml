@@ -1,0 +1,8 @@
+<botcomponent schemaname="crc28_timeWardenV2.component.SprintClassify">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Sprint Classification</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

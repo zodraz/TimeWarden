@@ -1,0 +1,10 @@
+kind: TaskDialog
+modelDisplayName: Get All Sprints
+outputs:
+  - propertyName: sprints
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 73167808-06e0-ef11-a730-000d3a661c77
+
+outputMode: Specific

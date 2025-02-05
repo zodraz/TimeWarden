@@ -1,0 +1,27 @@
+kind: TaskDialog
+modelDisplayName: Get Time Off Balance
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: text
+    entity: StringPrebuiltEntity
+    inputSettings: {}
+
+  - kind: AutomaticTaskInput
+    propertyName: text_1
+    description: The type of time off requested (e.g., Vacation, Sick, etc.). 
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: date
+    entity: StringPrebuiltEntity
+
+outputs:
+  - propertyName: balance
+    name: Balance
+    description: Time off balance
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 4415032f-a2da-ef11-a730-000d3a661c77
+
+outputMode: Specific

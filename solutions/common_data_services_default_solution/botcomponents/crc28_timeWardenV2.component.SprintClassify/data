@@ -1,0 +1,10 @@
+kind: TaskDialog
+modelDisplayName: Sprint Classification
+outputs:
+  - propertyName: sprintstate
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 3480e210-c0e0-ef11-a730-000d3a661c77
+
+outputMode: Specific

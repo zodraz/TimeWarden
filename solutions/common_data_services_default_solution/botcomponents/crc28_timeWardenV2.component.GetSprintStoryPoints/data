@@ -1,0 +1,10 @@
+kind: TaskDialog
+modelDisplayName: Get Sprint Story Points
+outputs:
+  - propertyName: storypoints
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: aae0ad74-7ce1-ef11-be20-002248a42c4e
+
+outputMode: Specific

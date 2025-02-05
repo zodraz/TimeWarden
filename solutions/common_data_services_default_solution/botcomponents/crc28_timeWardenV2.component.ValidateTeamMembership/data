@@ -1,0 +1,18 @@
+kind: TaskDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: email
+    entity: StringPrebuiltEntity
+
+outputs:
+  - propertyName: isteammember
+
+  - propertyName: employeeid
+    name: EmployeeId
+    description: Employee Id for the email validated
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 4543ebf1-40da-ef11-a730-000d3ab23609
+
+outputMode: Specific

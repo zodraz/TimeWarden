@@ -1,0 +1,8 @@
+<botcomponent schemaname="crc28_timeWardenV2.topic.ResetConversation">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Reset Conversation</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

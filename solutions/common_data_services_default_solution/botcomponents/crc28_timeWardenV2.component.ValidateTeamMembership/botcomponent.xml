@@ -1,0 +1,8 @@
+<botcomponent schemaname="crc28_timeWardenV2.component.ValidateTeamMembership">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Validate Team Membership</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

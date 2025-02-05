@@ -1,0 +1,54 @@
+kind: TaskDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: text_2
+    description: Comments
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: text_1
+    description: Reason of the time off request
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: text
+    description: The type of time off requested (e.g., Vacation, Sick, etc.). 
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: number
+    description: Total hours requested
+    entity: NumberPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: date_1
+    description: Please enter an end date for the time off request (YYYY-MM-DD)
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: date
+    description: Please enter a start date for the time off request (YYYY-MM-DD)
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: email
+    description: Requestor email adddress
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: text_3
+    description: Time off balance
+    entity: StringPrebuiltEntity
+
+outputs:
+  - propertyName: isrequestapproved
+
+  - propertyName: managercomments
+    name: ManagerComments
+    description: Comments from the manager approval
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 14728e28-69db-ef11-a72f-000d3a661c77
+
+outputMode: Specific

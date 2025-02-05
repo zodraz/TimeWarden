@@ -1,0 +1,39 @@
+kind: TaskDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: number_2
+    entity: NumberPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: number_1
+    entity: NumberPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: date_1
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: date
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: text
+    entity: StringPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: number
+    entity: NumberPrebuiltEntity
+
+  - kind: AutomaticTaskInput
+    propertyName: text_1
+    description: Array with notes
+    entity: StringPrebuiltEntity
+
+outputs:
+  - propertyName: result
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: cf98eeee-a0d9-ef11-a72f-000d3ab23609
+
+outputMode: Specific

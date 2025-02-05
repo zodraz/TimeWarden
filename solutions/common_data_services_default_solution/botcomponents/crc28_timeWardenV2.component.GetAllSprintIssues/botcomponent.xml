@@ -1,0 +1,8 @@
+<botcomponent schemaname="crc28_timeWardenV2.component.GetAllSprintIssues">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Get All Sprint Issues</name>
+  <parentbotid>
+    <schemaname>crc28_timeWardenV2</schemaname>
+  </parentbotid>
+</botcomponent>

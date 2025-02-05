@@ -1,0 +1,29 @@
+<botcomponent_workflowset>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.CreateTimeOffRequest" workflowid.workflowid="cf98eeee-a0d9-ef11-a72f-000d3ab23609">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.GetAllSprintIssues" workflowid.workflowid="86c028b7-9cd9-ef11-a72f-000d3ab23609">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.GetAllSprints" workflowid.workflowid="73167808-06e0-ef11-a730-000d3a661c77">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.GetSprintStoryPoints" workflowid.workflowid="aae0ad74-7ce1-ef11-be20-002248a42c4e">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.GetTimeOffBalance" workflowid.workflowid="4415032f-a2da-ef11-a730-000d3a661c77">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.SprintClassify" workflowid.workflowid="3480e210-c0e0-ef11-a730-000d3a661c77">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.TimeOffManagerApproval" workflowid.workflowid="14728e28-69db-ef11-a72f-000d3a661c77">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.ValidateTeamMembership" workflowid.workflowid="4543ebf1-40da-ef11-a730-000d3ab23609">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="crc28_timeWardenV2.component.WhenanewemailarrivesV3_gA4LFv8F3hAA2aB65l7HJ" workflowid.workflowid="7fb15f98-19dc-ef11-a72f-000d3a661c77">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+</botcomponent_workflowset>

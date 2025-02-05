@@ -1,0 +1,5 @@
+<botcomponent_connectionreferenceset>
+  <botcomponent_connectionreference botcomponentid.schemaname="crc28_timeWardenV2.component.Outlookcom-SendanemailV2" connectionreferenceid.connectionreferencelogicalname="crc28_timeWardenV2.shared_outlook.shared-outlook-d898ddc6-2059-4279-b2ee-08671835243e">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_connectionreference>
+</botcomponent_connectionreferenceset>

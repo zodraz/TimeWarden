@@ -1,0 +1,10 @@
+kind: TaskDialog
+modelDisplayName: Get All Sprint Issues
+outputs:
+  - propertyName: projectinfo
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 86c028b7-9cd9-ef11-a72f-000d3ab23609
+
+outputMode: Specific
